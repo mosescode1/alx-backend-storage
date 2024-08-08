@@ -1,10 +1,10 @@
 --  We are all unique!
+DROP TABLE IF EXISTS users;
 CREATE TABLE 
 IF NOT EXISTS
 users(
 	id INT AUTO_INCREMENT NOT NULL,
-    email VARCHAR(255),
+    email VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255),
-	PRIMARY KEY (id),
-    UNIQUE (email)
+	PRIMARY KEY (id)
     );
