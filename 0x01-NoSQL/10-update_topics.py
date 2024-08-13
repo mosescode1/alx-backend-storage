@@ -18,8 +18,10 @@ def update_topics(mongo_collection, name, topics):
     Returns:
     None
     """
-    result = mongo_collection.update_one(
+    if mongo_collection is None:
+        return None
+
+    mongo_collection.update_many(
         {"name": name},
-        {"$set": {"topic": topics}},
-        upsert=True
+        {"$set": {"topics": topics}}
     )
