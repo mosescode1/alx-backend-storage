@@ -1,2 +1,2 @@
 //#!/usr/bin/env bash
-db.school.countDocuments()
+db.school.count()
