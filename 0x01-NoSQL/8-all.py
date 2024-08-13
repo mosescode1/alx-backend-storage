@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Module to list all collection"""
 
 
@@ -7,4 +7,4 @@ def list_all(mongo_collection):
 
     if mongo_collection is None:
         return []
-    return mongo_collection.find()
+    return [doc for doc in mongo_collection.find()]
