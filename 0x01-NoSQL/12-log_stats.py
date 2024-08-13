@@ -24,3 +24,4 @@ status_count = col.count_documents(
     {'method': 'GET', "path": "/status"}
 )
 print("{} status check".format(status_count))
+client.close()
