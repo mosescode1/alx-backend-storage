@@ -26,9 +26,18 @@ if __name__ == "__main__":
     )
     print("{} status check".format(status_count))
 
-    values = col.find({}, {'ip': 1, '_id': 0}).limit(10).sort({'ip': 1})
+    distinct_values = col.aggregate([
+        {
+            '$group': {
+                                    '_id': '$ip',
+                                    'count': {'$sum': 1},
+                                    },
+        },
+        {'$sort': {'count': -1}},
+        {'$limit': 10}
+    ])
     print("IPs:")
-    for val in values:
-        print("\t{}".format(val.get("ip")))
+    for val in distinct_values:
+        print("\t{}: {}".format(val.get('_id'), val.get("count")))
 
     client.close()
