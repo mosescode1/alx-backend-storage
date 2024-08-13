@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Module for log stats"""
-from pymongo import MongoClient
 
 
 if __name__ == "__main__":
+    """ Include mongob"""
+    from pymongo import MongoClient
     client = MongoClient('mongodb://127.0.0.1:27017')
 
     # db = client["logs"]
@@ -20,8 +21,8 @@ if __name__ == "__main__":
         count = col.count_documents({'method': val})
         print("\tmethod {}: {}".format(val, count))
 
-status_count = col.count_documents(
-    {'method': 'GET', "path": "/status"}
-)
-print("{} status check".format(status_count))
-client.close()
+    status_count = col.count_documents(
+        {'method': 'GET', "path": "/status"}
+    )
+    print("{} status check".format(status_count))
+    client.close()
