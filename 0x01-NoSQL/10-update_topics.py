@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Module that updates"""
 
 
@@ -19,8 +19,7 @@ def update_topics(mongo_collection, name, topics):
     None
     """
     result = mongo_collection.update_one(
-        {"name": name},             
-        {"$set": {"topic": topics}},  
+        {"name": name},
+        {"$set": {"topic": topics}},
         upsert=True
     )
-
