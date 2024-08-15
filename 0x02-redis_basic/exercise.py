@@ -21,7 +21,7 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
-def call_history(method):
+def call_history(method: Callable) -> Callable:
     """Get the current inputs and outputs"""
     key = method.__qualname__
     inputs = method.__qualname__ + ":inputs"
@@ -31,9 +31,9 @@ def call_history(method):
     def wrapper(self, *args, **kwargs) -> Callable:
         """Get the current inputs and outputs"""
 
-        self._redis.lpush(inputs, str(args))
+        self._redis.rpush(inputs, str(args))
         data = method(self, *args, **kwargs)
-        self._redis.lpush(outputs, data)
+        self._redis.rpush(outputs, data)
         return data
     return wrapper
 
