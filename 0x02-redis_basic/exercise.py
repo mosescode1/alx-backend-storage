@@ -45,6 +45,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: Union[str, int, bytes, float]) -> str:
         """Store a data in redis and return the uuid"""
