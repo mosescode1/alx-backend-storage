@@ -21,7 +21,7 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
-def replay(method):
+def replay(method: Callable) -> str:
     """replay function"""
 
     m_key = method.__qualname__
