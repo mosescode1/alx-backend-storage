@@ -19,14 +19,24 @@ class Cache:
 
         return uuid_num
 
-    def get(self, key, fn: Optional[Callable]):
+    def get(self, key, fn: Optional[Callable] = None):
         """Retrieves data from redis and apply optional transformation"""
 
         exists = self._redis.get(key)
+
         if exists is None:
             return None
 
         if fn:
-            return fn(exists)
+            return str(fn(exists))
 
         return exists
+
+    def get_str(self, key):
+        """Return the string Implemetation"""
+        return self._redis.get(key, fn=lambda d: d.decode("utf-8"))
+
+    def get_int(self, key):
+        """Return the int Implemetation"""
+
+        return self._redis.get(key, fn=int)
