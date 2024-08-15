@@ -22,6 +22,8 @@ def count_calls(method: Callable) -> Callable:
 
 
 def replay(method):
+    """replay function"""
+
     m_key = method.__qualname__
     inputs = method.__qualname__ + ":inputs"
     outputs = method.__qualname__ + ":outputs"
@@ -93,14 +95,3 @@ class Cache:
         """Return the int Implemetation"""
 
         return self._redis.get(key, fn=int)
-
-
-cache = Cache()
-
-s1 = cache.store("first")
-
-s2 = cache.store("secont")
-
-s3 = cache.store("third")
-
-replay(cache.store)
