@@ -21,6 +21,24 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(method):
+    m_key = method.__qualname__
+    inputs = method.__qualname__ + ":inputs"
+    outputs = method.__qualname__ + ":outputs"
+
+    redis = method.__self__._redis
+    print(redis)
+    count = redis.get(m_key).decode("utf-8")
+    print('{} was called {} times'.format(m_key, count))
+    allinput = redis.lrange(inputs, 0, -1)
+    alloutput = redis.lrange(outputs, 0, -1)
+    allData = list(zip(alloutput, allinput))
+    for k, v in allData:
+        key = k.decode("utf-8")
+        v = v.decode("utf-8")
+        print(f"{m_key}(*{v}) -> {key}")
+
+
 def call_history(method: Callable) -> Callable:
     """Get the current inputs and outputs"""
     key = method.__qualname__
@@ -75,3 +93,14 @@ class Cache:
         """Return the int Implemetation"""
 
         return self._redis.get(key, fn=int)
+
+
+cache = Cache()
+
+s1 = cache.store("first")
+
+s2 = cache.store("secont")
+
+s3 = cache.store("third")
+
+replay(cache.store)
