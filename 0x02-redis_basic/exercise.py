@@ -33,9 +33,9 @@ def call_history(method):
 
         self._redis.lpush(inputs, str(args))
         data = method(self, *args, **kwargs)
-        self.__lpush(outputs, data)
+        self._redis.lpush(outputs, data)
         return data
-        return wrapper
+    return wrapper
 
 
 class Cache:
