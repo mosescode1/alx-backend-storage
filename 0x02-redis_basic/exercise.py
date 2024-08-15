@@ -2,6 +2,7 @@
 """Module for redis"""
 import redis
 import uuid
+from typing import Union
 
 
 class Cache:
@@ -11,7 +12,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    def store(self, data: any) -> str:
+    def store(self, data: Union[str, int, bytes, float]) -> str:
         """Store a data in redis"""
         uuid_num = str(uuid.uuid4())
         self._redis.set(uuid_num, data)
