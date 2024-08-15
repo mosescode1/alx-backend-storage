@@ -21,6 +21,23 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
+def call_history(method):
+    """Get the current inputs and outputs"""
+    key = method.__qualname__
+    inputs = method.__qualname__ + ":inputs"
+    outputs = method.__qualname__ + ":outputs"
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs) -> Callable:
+        """Get the current inputs and outputs"""
+
+        self._redis.lpush(inputs, str(args))
+        data = method(self, *args, **kwargs)
+        self.__lpush(outputs, data)
+        return data
+        return wrapper
+
+
 class Cache:
     """Cache class for storage"""
 
