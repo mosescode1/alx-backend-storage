@@ -9,7 +9,7 @@ from functools import wraps
 def count_calls(method: Callable) -> Callable:
     """Decorator that counts method calls and increments a Redis counter"""
 
-    key = f"{method.__qualname__}"
+    key = method.__qualname__
 
     @wraps(method)
     def wrapper(self, *args, **kwargs):
